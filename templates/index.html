@@ -1,0 +1,129 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            box-sizing: border-box;
+        }
+
+        .card-header {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="datetime-local"]:focus,
+        select:focus {
+            border-color: #4d4dff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 0;
+            background-color: #4d4dff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3333ff;
+        }
+    </style>
+    <title>Zoho Connect Event Form</title>
+</head>
+<body>
+
+<div class="card">
+    <form action="{{ url_for('create_event') }}" method="post">
+    <div class="card-header">Create Event</div>
+    <div class="form-group">
+        <label for="eventTitle">Event Title:</label>
+        <input type="text" id="eventTitle" placeholder="Enter event title..." name="event_title">
+    </div>
+    <div class="form-group">
+        <label for="startDate">Start Date:</label>
+        <input type="datetime-local" id="startDate" name="startDate">
+    </div>
+    <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <input type="datetime-local" id="endDate" name="endDate">
+    </div>
+    <div class="form-group">
+        <label for="repeatOption">Repeat Option:</label>
+        <select id="repeatOption" name="repeat_option">
+            <option value="0">No Repeat</option>
+            <option value="1">Daily</option>
+            <option value="7">Weekly</option>
+        </select>
+    </div>
+    <div class="form-group">
+       
+    {% if groups %}
+        <label for="teamSelect">Select Team:</label>
+        <select id="teamSelect" name="selected_team">
+            {% for group_id, group_info in groups.items() %}
+            <option value="{{ group_id }}">{{ group_info.name }}</option>
+            {% endfor %}
+        </select>
+        {% else %}
+        <p>No Zoho Groups available.</p>
+    {% endif %}
+    </div>
+    <button type="submit">Create Event</button>
+</form>
+</div>
+
+</body>
+</html>
